@@ -17,6 +17,7 @@ module.exports = {
       'gray': '#8492a6',
       'gray-light': '#d3dce6',
       'white': '#FFFFFF',
+      'red': '#CB4042',
       'bgcolor': 'rgb(168 162 158)',
       'txtcolor': 'rgb(255 247 237)',
       'titlebg': 'rgb(214 211 209)',
