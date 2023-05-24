@@ -2,6 +2,7 @@ import { CheckIcon, ClockIcon } from '@heroicons/react/20/solid'
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
+import img from './image/security.png'
 
 // const products = [
 //   {
@@ -87,6 +88,7 @@ export default function Comment() {
     .then(res => {
       if(res.data[0].token === localStorage.getItem("account") ){
         setAuthToken(true)
+        localStorage.setItem("username", res.data[0].name)
       } else {
         return res.data
       }
@@ -190,13 +192,14 @@ export default function Comment() {
       console.log(err)
     }
   }
+
   const handleCancelClick = () => {
     setValues(false); // 将表单值重置为初始值
   };
   return (
     <div className="bg-white">
       <div className="mx-auto max-w-2xl px-4 py-16 sm:px-6 sm:py-24 lg:px-0">
-        <h1 className="text-center text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">請多指教 共{count.map(c=>c.count)}則留言</h1>
+        <h1 className="text-center text-3xl font-bold tracking-tight text-gray-dark sm:text-4xl">共{count.map(c=>c.count)}則留言</h1>
         { auth || id === 21 || username=== 'guest' ?
             <div>
               <div className="mt-4">
@@ -224,7 +227,7 @@ export default function Comment() {
                 </div>
               </div>
             </div>
-        :
+          :
           <div className="mt-6 text-center text-sm">
                 <a href="/login" className="font-medium text-indigo-600 hover:text-indigo-500">
                   登入留言ㄅ
@@ -240,12 +243,12 @@ export default function Comment() {
                   <div className="ml-4 flex flex-1 flex-col sm:ml-6">
                     <div>
                       <div className="flex justify-start">
-                        <img src="https://tailwindui.com/img/ecommerce-images/checkout-page-03-product-04.jpg" className="w-20 rounded-full" />
+                        <img src={img} className="w-20 rounded-full" />
                         <div className="basis-11/12 ml-5 place-self-center flex-col justify-start">
-                          <p className='mb-5'>{comment.name}</p>
+                          <p className='mb-3 text-lg font-bold text-gray-dark'>{comment.name}</p>
                           <p className="text-sm font-medium text-gray-900">{formatDateTime(comment.update_time)}</p>
                         </div>
-                        { setAuthToken && username === comment.name ?
+                        { setAuthToken && username === comment.name && username !== 'guest' && id !== 21 ?
                         <div>
                           <button type="button" onClick={()=>fecthUpdateComment(comment.id)} className="text-sm font-medium text-indigo-600 hover:text-spanbg">
                             <svg class="w-6 h-6 basis-1/12 justify-end" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
@@ -263,7 +266,7 @@ export default function Comment() {
                         }
                       </div>
                       <div className="flex">
-                        <h4 className="text-sm mt-5">
+                        <h4 className="text-sm font-medium mt-5">
                         {Isshow && authtoken ? (
                           <form>
                             <span>更改留言</span>

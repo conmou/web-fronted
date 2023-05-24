@@ -26,7 +26,7 @@ export function RappuTappu() {
         <p>
            為了減少購買者選購時，因為看規格看得眼花撩亂及需要來回比對價格，團隊開發以筆電的規格做篩選及查詢的網頁，期望使用者找到最符合需求的筆電。
         </p>
-        <div class="flex flex-row text-center">
+        <div class="flex flex-row text-center mt-2">
           <p class="basis-1/3">
             ▲ 電腦比價
           </p>
@@ -49,7 +49,7 @@ export function EatWalker() {
         <p>
           為了在短暫休息時間，達成較良好的用餐感受，團隊開發輔助使用者快速選擇餐廳，減少使用者選擇餐廳的時間；若閒暇時間想找人吃飯，也提供揪團功能，可邀請附近飯友加入。
         </p>
-        <div class="flex flex-row text-center">
+        <div class="flex flex-row text-center mt-2">
           <p class="basis-1/3">
             ▲ 探索餐廳
           </p>
@@ -75,7 +75,7 @@ export function GetTH() {
         <p>
           為了使養植物的用戶，更好的管控植物生長環境，團隊使用樹莓派開發搭配sensor感測環境溫度，並於網頁呈現實時溫濕度，以利用戶觀看。
         </p>
-        <div class="flex flex-row text-center">
+        <div class="flex flex-row text-center mt-2">
           <p class="basis-1/3">
             ▲ 即時資料
           </p>
@@ -98,7 +98,7 @@ export function Paws() {
         <p>
           為了使經常出差的上班族減少家裡貓狗沒人照顧的擔憂，本團隊開發一個能看到貓狗的狀況且能夠陪伴貓狗遊玩的產品，也能應用於寵物旅館，減少因為寵物旅客多而疏忽寵物的狀況。
         </p>
-        <div class="flex flex-row text-center">
+        <div class="flex flex-row text-center mt-2">
           <p class="basis-1/3">
             ▲ 即時畫面
           </p>

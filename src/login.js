@@ -20,6 +20,8 @@ function Login() {
 
   const [id, setId] = useState('')
 
+  const [loginerror, setLoginError] = useState("")
+
   const handleInput = (e) =>{
       setValues((prev)=>({...prev, [e.target.name]: e.target.value }))
   }
@@ -28,13 +30,16 @@ function Login() {
       e.preventDefault();
         try{
           const res = await axios.post("http://localhost:5001/login", values)
-          if(res.data.Login){
+          if(res.data.Login === true){
             localStorage.setItem("account", res.data.token);
             const username = res.data.data[0].name
             const id = res.data.data[0].id
             localStorage.setItem("username", username);
             localStorage.setItem("id", id);
             navigate("/");
+          } else{
+            setLoginError(res.data.Message)
+            console.log(res.data.Message)
           }
         } catch(err){
           console.log(err)
@@ -49,6 +54,8 @@ function Login() {
           localStorage.setItem("anonymous", res.data.token);
           const username = res.data.data[0].name
           const id = res.data.data[0].id
+          localStorage.setItem("id", id);
+          localStorage.setItem("username", username);
           navigate(`/?username=${username}&id=${id}`);
           console.log(username)
         }
@@ -87,20 +94,30 @@ function Login() {
                   </h2>
                   <p className="mt-2 text-sm leading-6 text-gray-500">
                     還沒註冊過?{' '}
-                    <a href="/register" className="font-semibold text-indigo-600 hover:text-white">
+                    <a href="/register" className="font-semibold text-indigo-600 hover:text-gray">
                       註冊
                     </a>
                   </p>
                   <p className="mt-2 text-sm leading-6 text-gray-500">
                     Or {' '}
-                    <a onClick={handleAnonymousSubmit} href="/" className="font-semibold text-indigo-600 hover:text-white">
+                    <a onClick={handleAnonymousSubmit} href="/" className="font-semibold text-indigo-600 hover:text-gray">
                       匿名登入
                     </a>
                   </p>
                 </div>
     
-                <div className="mt-10">
-                  <div>
+                  {/* 顯示錯誤訊息 */}
+                  { loginerror &&
+                    <div role="alert" className='my-2'>
+                      <div class="bg-red/80 text-white font-bold rounded-t px-4 py-1">
+                        登入失敗
+                      </div>
+                      <div class="border border-t-0 border-red rounded-b bg-red/20 px-4 py-1 text-gray-dark">
+                        <p>{loginerror}</p>
+                      </div>
+                    </div>
+                  }
+                  <div className='mt-1'>
                     <form action="#" method="POST" className="space-y-6" onSubmit={handleAccountSubmit}>
                       <div>
                         <label htmlFor="email" className="block text-sm font-medium leading-6 text-gray-900">
@@ -152,7 +169,6 @@ function Login() {
                 </div>
               </div>
             </div>
-          </div>
       )
 }
 export default Login;

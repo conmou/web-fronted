@@ -44,12 +44,12 @@ function Language() {
           </div>
 
           <section aria-labelledby="products-heading" className="pb-24 pt-6">
-            <div className="mx-auto items-center gap-y-16 gap-x-8 py-24 px-4 sm:px-6 sm:py-16 lg:max-w-7xl lg:grid-cols-1 lg:px-8">
-             <div className="mt-4 grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 sm:gap-x-20 sm:gap-y-16 lg:grid-cols-4 lg:gap-x-20">
+            <div className="mx-auto items-center gap-y-16 gap-x-8 px-4 sm:px-6 sm:py-16 lg:max-w-7xl lg:grid-cols-1 lg:px-8">
+             <div className="grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 sm:gap-x-20 sm:gap-y-16 lg:grid-cols-4 lg:gap-x-20">
                {features.map((feature) => (
                  <div key={feature.name} class="rounded p-5 shadow-xl bg-gray-dark/10">
                    <div class="flex justify-center">
-                      <img class="w-20 lg:w-full sm:w-40 "alt='lanpic' src={feature.image}  />
+                      <img class="w-40 lg:w-full sm:w-40 "alt='lanpic' src={feature.image}  />
                    </div>
                    <div class="px-6 py-4">
                      <p className="font-bold text-xl text-gray-dark text-base text-center">{feature.name}</p>

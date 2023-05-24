@@ -36,7 +36,7 @@ export default function Project() {
             <div className="gap-x-8 gap-y-10 block">
               {/* Filters */}
                 {filters.map((section) => (
-                  <Disclosure as="div" key={section.id} className="border-2 border-white py-6 text-txtcolor bg-spanbg">
+                  <Disclosure as="div" key={section.id} className=" rounded-lg border-2 border-white py-6 text-txtcolor bg-spanbg">
                     {({ open }) => (
                       <>
                         <h3 className="-my-3 flow-root">

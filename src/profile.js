@@ -1,6 +1,8 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { ChevronDownIcon } from '@heroicons/react/20/solid'
 import { Switch } from '@headlessui/react'
+import { useLocation, useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
@@ -9,84 +11,159 @@ function classNames(...classes) {
 export default function Example() {
   const [agreed, setAgreed] = useState(false)
 
+  const [user, setUser] = useState([])
+
+  const [updateuser, setupdateUser] = useState({
+    username: "",
+    sex: null,
+    phone: "",
+    des: "",
+  });
+
+  const id = localStorage.getItem('id')
+
+  const navigate = useNavigate()
+
+  useEffect(()=>{
+    const fecthUser = async ()=>{
+      try{
+        const res = await axios.get("http://localhost:5001/user/"+id, {
+          headers: {
+            'access-token' : localStorage.getItem("account")
+          }
+        })
+        setUser(res.data[0]);
+      }catch(err){
+        console.log(err);
+      }
+    }
+    fecthUser();
+  }, [])
+
+  const handleUpdateChange = (e) =>{
+    const { name, value } = e.target
+    setupdateUser((prev)=>({
+      ...prev, 
+      [name]: value,
+      // [username]: e.target.value,
+      // [sex]: name === "sex" ? parseInt(value) : value,
+      // [phone]: e.target.value,
+      // [des]: e.target.value,
+    }))
+  }
+
+  const handleUpdateClick = async (id) =>{
+    try{
+      await axios.put("http://localhost:5001/user/"+id, updateuser, {
+        headers: {
+          'access-token' : localStorage.getItem("account")
+        }
+      })
+      // window.location.reload()
+      navigate("/")
+    }catch(err){
+      console.log(err)
+    }
+  }
+  console.log(updateuser)
+
   return (
-    <div className="isolate bg-white px-6 py-24 sm:py-32 lg:px-8">
+    <div className="isolate bg-bg px-6 py-24 sm:py-32 lg:px-8">
       <div className="mx-auto max-w-2xl text-center">
         <h2 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">個人檔案</h2>
       </div>
-      <form action="#" method="POST" className="mx-auto mt-16 max-w-xl sm:mt-20">
+      <form className="mx-auto mt-16 max-w-xl sm:mt-20">
         <div className="grid grid-cols-1 gap-x-8 gap-y-6 sm:grid-cols-2">
           <div className="sm:col-span-2">
-            <label htmlFor="Name" className="block text-sm font-semibold leading-6 text-gray-900">
-              Name
+            <label htmlFor="Name" className="block text-md font-semibold leading-6 text-gray-900">
+              姓名
             </label>
             <div className="mt-2.5">
               <input
                 type="text"
-                name="company"
-                id="company"
-                autoComplete="organization"
+                name="username"
+                id="username"
+                autoComplete="username"
+                // value={user.name || ""}
+                defaultValue={user.name}
+                onChange={handleUpdateChange}
                 className="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
               />
             </div>
           </div>
           <div className="sm:col-span-2">
-            <label htmlFor="email" className="block text-sm font-semibold leading-6 text-gray-900">
-              Email
+            <label htmlFor="email" className="block text-md font-semibold leading-6 text-gray-900">
+              性別
+            </label>
+            <div defaultValue={user.name} className="mt-2.5 flex">
+                <div class="flex items-center basis-1/3 justify-center">
+                  <input 
+                    type="radio" 
+                    id="sex0" 
+                    value="0" 
+                    name="sex" 
+                    class="form-radio text-indigo-600" 
+                    checked={user.sex === 0}
+                    onChange={handleUpdateChange}
+                  />
+                  <label for="option0" class="ml-2 font-bold">男</label>
+                </div>
+                <div class="flex items-center basis-1/3 justify-center">
+                  <input 
+                    type="radio" 
+                    id="sex1" 
+                    value="1" 
+                    name="sex" 
+                    class="form-radio text-indigo-600" 
+                    checked={user.sex === 1}
+                    onChange={handleUpdateChange}
+                  />
+                  <label for="option1" class="ml-2 font-bold">女</label>
+                </div>
+                <div class="flex items-center basis-1/3 justify-center">
+                  <input 
+                    type="radio" 
+                    id="sex2" 
+                    value="2" 
+                    name="sex" 
+                    class="form-radio text-indigo-600" 
+                    checked={user.sex === 2}
+                    onChange={handleUpdateChange}
+                  />
+                  <label for="option2" class="ml-2 font-bold">其他</label>
+                </div>
+            </div>
+          </div>
+          <div className="sm:col-span-2">
+            <label htmlFor="phone-number" className="block text-md font-semibold leading-6 text-gray-900">
+              電話
             </label>
             <div className="mt-2.5">
               <input
-                type="email"
-                name="email"
-                id="email"
-                autoComplete="email"
+                type="phone"
+                name="phone"
+                id="phone"
+                autoComplete="phone"
+                // value={user.phone || ""}
+                defaultValue={user.phone}
+                onChange={handleUpdateChange}
                 className="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
               />
             </div>
           </div>
           <div className="sm:col-span-2">
-            <label htmlFor="phone-number" className="block text-sm font-semibold leading-6 text-gray-900">
-              Phone number
-            </label>
-            <div className="relative mt-2.5">
-              <div className="absolute inset-y-0 left-0 flex items-center">
-                <label htmlFor="country" className="sr-only">
-                  Country
-                </label>
-                <select
-                  id="country"
-                  name="country"
-                  className="h-full rounded-md border-0 bg-transparent bg-none py-0 pl-4 pr-9 text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm"
-                >
-                  <option>US</option>
-                  <option>CA</option>
-                  <option>EU</option>
-                </select>
-                <ChevronDownIcon
-                  className="pointer-events-none absolute right-3 top-0 h-full w-5 text-gray-400"
-                  aria-hidden="true"
-                />
-              </div>
-              <input
-                type="tel"
-                name="phone-number"
-                id="phone-number"
-                autoComplete="tel"
-                className="block w-full rounded-md border-0 px-3.5 py-2 pl-20 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-              />
-            </div>
-          </div>
-          <div className="sm:col-span-2">
-            <label htmlFor="message" className="block text-sm font-semibold leading-6 text-gray-900">
-              Message
+            <label htmlFor="message" className="block text-md font-semibold leading-6 text-gray-900">
+              描述
             </label>
             <div className="mt-2.5">
               <textarea
-                name="message"
-                id="message"
+                name="des"
+                id="des"
                 rows={4}
+                onChange={handleUpdateChange}
                 className="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                defaultValue={''}
+                // value={user.des || ""}
+                defaultValue={user.des}
               />
             </div>
           </div>
@@ -96,7 +173,7 @@ export default function Example() {
                 checked={agreed}
                 onChange={setAgreed}
                 className={classNames(
-                  agreed ? 'bg-indigo-600' : 'bg-gray-200',
+                  agreed ? 'bg-gray' : 'bg-gray-200',
                   'flex w-8 flex-none cursor-pointer rounded-full p-px ring-1 ring-inset ring-gray-900/5 transition-colors duration-200 ease-in-out focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600'
                 )}
               >
@@ -122,9 +199,10 @@ export default function Example() {
         <div className="mt-10">
           <button
             type="submit"
-            className="block w-full rounded-md bg-indigo-600 px-3.5 py-2.5 text-center text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+            onClick={ () => handleUpdateClick(user.id) }
+            className="block w-full rounded-md bg-gray-dark px-3.5 py-2.5 text-center text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
           >
-            Let's talk
+            更新
           </button>
         </div>
       </form>
