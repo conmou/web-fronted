@@ -10,10 +10,7 @@ function Experience() {
   return [
     <div className="bg-bgcolor">
       <div className="mx-auto grid max-w-2xl items-center pt-16 px-4 sm:px-6 sm:py-16 sm:pb-8 lg:max-w-7xl lg:grid-cols-2 lg:px-8">
-        <div>
-          <h2 className="text-3xl font-bold text-titletxt sm:text-4xl bg-titlebg p-2 drop-shadow-md">經歷</h2>
-          <p className="mt-4 text-xl text-txtcolor underline underline decoration-double">參與開發的專案</p>
-        </div>
+        <h2 className="text-3xl font-bold text-titletxt sm:text-4xl bg-titlebg/70 p-2 drop-shadow-md">經歷</h2>
       </div>
       <div className="mx-auto grid rounded-lg max-w-2xl grid-cols-1 items-center gap-y-16 gap-x-8 py-24 px-8 sm:px-6 sm:pt-4 lg:max-w-7xl lg:grid-cols-1 lg:px-16">
             <div className="mt-8 grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-1 sm:gap-y-16 lg:gap-x-8">

@@ -1,7 +1,7 @@
 import { CheckIcon, ClockIcon } from '@heroicons/react/20/solid'
 import axios from 'axios';
 import { useEffect, useState } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 // const products = [
 //   {
@@ -30,9 +30,10 @@ function formatDateTime(isoDate) {
 
 export default function Comment() {
   const location = useLocation()
-  const params = new URLSearchParams(location.search);
-  const id = params.get('id');
-  const username = params.get('username');
+  // const params = new URLSearchParams(location.search);
+  // const id = params.get('id');
+  const id = localStorage.getItem("id");
+  const username = localStorage.getItem("username");
 
   const [count, setCount] = useState([])
   const [comments, setComments] = useState([])
@@ -48,8 +49,13 @@ export default function Comment() {
 
   const [auth, setAuth] = useState(false)
 
+  const [authtoken, setAuthToken] = useState(false)
+
+  const [anonymous, setAnonymous] = useState(false)
+
   const [value, setValues] = useState(false)
-  
+
+  const navigate = useNavigate()
 // READ
   useEffect(()=>{
     const fecthAllComment = async ()=>{
@@ -72,18 +78,34 @@ export default function Comment() {
     countComment();
   }, [])
 
+  useEffect(() => {
+    axios.get("http://localhost:5001/user/"+id, {
+      headers: {
+        'access-token' : localStorage.getItem("account")
+      }
+    })
+    .then(res => {
+      if(res.data[0].token === localStorage.getItem("account") ){
+        setAuthToken(true)
+      } else {
+        return res.data
+      }
+    })
+  })
+
   // auth驗證登入
   useEffect(() => {
     axios.get("http://localhost:5001", {
       headers: {
-        'access-token' : localStorage.getItem("token")
+        'access-token' : localStorage.getItem("account")
       }
     })
     .then(res => {
-      if(res.data.Status === "Success"){
+      if(res.data.Status === "Success" || localStorage.getItem("anonymous")){
         setAuth(true)
-      } else{
-        return "res.data"
+      }
+      else {
+        return res.data
       }
     })
   })
@@ -95,15 +117,30 @@ export default function Comment() {
   
   const handleClick = async e =>{
     e.preventDefault();
-    try{
-      await axios.post("http://localhost:5001/comment", addcomments, {
-        headers: {
-          'access-token' : localStorage.getItem("token")
-        }
-      })
-      window.location.reload()
-    }catch(err){
-      console.log(err)
+    // try{
+    //   await axios.post("http://localhost:5001/comment", addcomments, {
+    //     headers: {
+    //       'access-token' : localStorage.getItem("account")
+    //     }
+    //   })
+    //   // window.location.reload()
+    // }catch(err){
+    //   console.log(err)
+    // }
+    try {
+      const token = localStorage.getItem("account") || localStorage.getItem("anonymous");
+      if (token) {
+        await axios.post("http://localhost:5001/comment", addcomments, {
+          headers: {
+            'access-token': token
+          }
+        });
+        window.location.reload();
+      } else {
+        // 处理未登录的逻辑
+      }
+    } catch (err) {
+      console.log(err);
     }
   }
 // DELETE
@@ -111,7 +148,7 @@ export default function Comment() {
     try{
       await axios.delete("http://localhost:5001/comment/"+id, {
         headers: {
-          'access-token' : localStorage.getItem("token")
+          'access-token' : localStorage.getItem("account")
         }
       })
       window.location.reload()
@@ -125,12 +162,11 @@ export default function Comment() {
       try{
         const res = await axios.get("http://localhost:5001/comment/"+id, {
           headers: {
-            'access-token' : localStorage.getItem("token")
+            'access-token' : localStorage.getItem("account")
           }
         })
         setshowupdate(res.data);
         setIsshow(true)
-        setValues(true)
       }catch(err){
         console.log(err);
       }
@@ -144,10 +180,12 @@ export default function Comment() {
     try{
       await axios.put("http://localhost:5001/comment/"+id, updatecomments, {
         headers: {
-          'access-token' : localStorage.getItem("token")
+          'access-token' : localStorage.getItem("account")
         }
       })
-      // window.location.reload()
+      // navigate(`/?username=${username}&id=${id}`)
+      // navigate('/')
+      window.location.reload()
     }catch(err){
       console.log(err)
     }
@@ -159,7 +197,7 @@ export default function Comment() {
     <div className="bg-white">
       <div className="mx-auto max-w-2xl px-4 py-16 sm:px-6 sm:py-24 lg:px-0">
         <h1 className="text-center text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">請多指教 共{count.map(c=>c.count)}則留言</h1>
-        { auth ?
+        { auth || id === 21 || username=== 'guest' ?
             <div>
               <div className="mt-4">
                 <label htmlFor="email-address" className="block text-sm font-medium text-gray-700">
@@ -187,7 +225,7 @@ export default function Comment() {
               </div>
             </div>
         :
-        <div className="mt-6 text-center text-sm">
+          <div className="mt-6 text-center text-sm">
                 <a href="/login" className="font-medium text-indigo-600 hover:text-indigo-500">
                   登入留言ㄅ
                   <span aria-hidden="true"> &rarr;</span>
@@ -207,7 +245,7 @@ export default function Comment() {
                           <p className='mb-5'>{comment.name}</p>
                           <p className="text-sm font-medium text-gray-900">{formatDateTime(comment.update_time)}</p>
                         </div>
-                        { comment.name === username ?
+                        { setAuthToken && username === comment.name ?
                         <div>
                           <button type="button" onClick={()=>fecthUpdateComment(comment.id)} className="text-sm font-medium text-indigo-600 hover:text-spanbg">
                             <svg class="w-6 h-6 basis-1/12 justify-end" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
@@ -226,7 +264,7 @@ export default function Comment() {
                       </div>
                       <div className="flex">
                         <h4 className="text-sm mt-5">
-                        {Isshow && showupdate[0].id === comment.id && value === true? (
+                        {Isshow && authtoken ? (
                           <form>
                             <span>更改留言</span>
                             <input type="text" class="w-full bg-white rounded-md p-1" placeholder='content' name='content' defaultValue={showupdate[0].content} onChange={handleUpdateChange} /> 

@@ -13,7 +13,7 @@ module.exports = {
       'orange': '#ff7849',
       'green': '#13ce66',
       'yellow': '#ffc82c',
-      'gray-dark': '#273444',
+      
       'gray': '#8492a6',
       'gray-light': '#d3dce6',
       'white': '#FFFFFF',
@@ -23,8 +23,20 @@ module.exports = {
       'titlebg': 'rgb(214 211 209)',
       'titletxt': 'rgb(255 251 235)',
       'navbarbg': 'rgb(231 229 228)',
+      
       'spanbg':'rgb(100 116 139)',
       'uderlinecolor': 'rgb(21 94 117)',
+
+      'gray-dark': '#273444',
+      'all-bg': '#878D95',
+      'bg': '#E6E6E6',
+      'b-blue': 'rgb(170 184 188)',
+      'w-blue': 'rgb(188 199 201)',
+      'b-green': 'rgb(132 163 135)',
+      'w-green': 'rgb(161 183 163)',
+      'b-red': 'rgb(188 130 120)',
+      'w-red': 'rgb(196 150 142)',
+
     },
     plugins: [
       require('@tailwindcss/forms'),

@@ -9,19 +9,19 @@ import About from './aboutme';
 import Login from './login';
 import Register from './register';
 import Header from './header'
-import { Route, Routes, useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import { Route, Routes } from 'react-router-dom';
 import Profile from './profile';
+import Project from './project';
 
 function App() {
   return [
     // navbar
     <Header/>,
-    <div className="bg-bgcolor">
+    <div className="bg-bg">
       <Routes>
         <Route path="/" element={ <About /> } />
         <Route path="/language" element={ <Language /> } />
-        <Route path="/experience" element={ <Experience /> } />
+        <Route path="/project" element={ <Project /> } />
         <Route path="/login" element={ <Login /> } />
         <Route path="/register" element={ <Register /> } />
         <Route path="/profile" element={ <Profile /> } />

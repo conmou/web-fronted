@@ -1,55 +1,133 @@
-import React, { useEffect, useState } from 'react';
-import './tailwind.css'
-import img from "./image/pic.webp"
-import './App.css'
-import axios from 'axios'
-import Comment from './Comment';
-import { useNavigate } from 'react-router-dom';
-// import { useLocation, useNavigate } from 'react-router-dom';
+import { useState } from 'react'
+import { ChevronDownIcon } from '@heroicons/react/20/solid'
+import { Switch } from '@headlessui/react'
 
-function Profile() {
-  return [
-    <div className="bg-bgcolor">
-      <div className="mx-auto grid max-w-2xl grid-cols-1 items-center gap-y-16 gap-x-8 py-24 px-4 sm:px-6 sm:py-32 lg:max-w-7xl lg:grid-cols-2 lg:px-8">
-        <div id="wrapper" className='px-5 py-10 bg-spanbg drop-shadow-xl'>
-          <h2 className="text-3xl font-bold tracking-tight text-titletxt sm:text-4xl bg-titlebg/50 p-2 drop-shadow-md">關於我</h2>
-          <ul id="dynamic">
-            <li><span className="text-2xl mt-4 text-xl text-white/50 underline underline decoration-dashed">
-              Hi ！ I'm YuJin
-            </span></li>
-          </ul>
-          <p className="mt-4 text-txtcolor">
-            喜愛小動物 討厭爬蟲類
-          </p>
-          <p className="mt-4 text-txtcolor font-bold">
-            <span className='grid grid-cols-4 px-4'>
-              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M4.26 10.147a60.436 60.436 0 00-.491 6.347A48.627 48.627 0 0112 20.904a48.627 48.627 0 018.232-4.41 60.46 60.46 0 00-.491-6.347m-15.482 0a50.57 50.57 0 00-2.658-.813A59.905 59.905 0 0112 3.493a59.902 59.902 0 0110.399 5.84c-.896.248-1.783.52-2.658.814m-15.482 0A50.697 50.697 0 0112 13.489a50.702 50.702 0 017.74-3.342M6.75 15a.75.75 0 100-1.5.75.75 0 000 1.5zm0 0v-3.675A55.378 55.378 0 0112 8.443m-7.007 11.55A5.981 5.981 0 006.75 15.75v-1.5" />
-              </svg>
-              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126zM12 15.75h.007v.008H12v-.008z" />
-              </svg>
-            </span>
-              Student & Front-end Engineer 
-            <span className="ml-4 mt-4 text-txtcolor line-through font-normal"> 
-              Maybe? 
-            </span>
-          </p>
-          <p className="mt-4 text-txtcolor underline decoration-uderlinecolor">
-            我是陳宥蓁，目前就讀於台中科技大學資訊應用菁英班。於學校有開發專案的經驗，保持好奇及野心，目前仍在學習更多面向技術，希望未來能找到自己的定位！！！
-          </p>
-        </div>
-        <div className="grid grid-cols sm:gap-6 lg:gap-8">
-          <img
-            src={img}
-            className="rounded-xl mx-auto item-conter"
-            alt='me'
-            width="80%"
-          />
-        </div>
-      </div>
-      <Comment />
-    </div>
-  ];
+function classNames(...classes) {
+  return classes.filter(Boolean).join(' ')
 }
-export default Profile;
+
+export default function Example() {
+  const [agreed, setAgreed] = useState(false)
+
+  return (
+    <div className="isolate bg-white px-6 py-24 sm:py-32 lg:px-8">
+      <div className="mx-auto max-w-2xl text-center">
+        <h2 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">個人檔案</h2>
+      </div>
+      <form action="#" method="POST" className="mx-auto mt-16 max-w-xl sm:mt-20">
+        <div className="grid grid-cols-1 gap-x-8 gap-y-6 sm:grid-cols-2">
+          <div className="sm:col-span-2">
+            <label htmlFor="Name" className="block text-sm font-semibold leading-6 text-gray-900">
+              Name
+            </label>
+            <div className="mt-2.5">
+              <input
+                type="text"
+                name="company"
+                id="company"
+                autoComplete="organization"
+                className="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+              />
+            </div>
+          </div>
+          <div className="sm:col-span-2">
+            <label htmlFor="email" className="block text-sm font-semibold leading-6 text-gray-900">
+              Email
+            </label>
+            <div className="mt-2.5">
+              <input
+                type="email"
+                name="email"
+                id="email"
+                autoComplete="email"
+                className="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+              />
+            </div>
+          </div>
+          <div className="sm:col-span-2">
+            <label htmlFor="phone-number" className="block text-sm font-semibold leading-6 text-gray-900">
+              Phone number
+            </label>
+            <div className="relative mt-2.5">
+              <div className="absolute inset-y-0 left-0 flex items-center">
+                <label htmlFor="country" className="sr-only">
+                  Country
+                </label>
+                <select
+                  id="country"
+                  name="country"
+                  className="h-full rounded-md border-0 bg-transparent bg-none py-0 pl-4 pr-9 text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm"
+                >
+                  <option>US</option>
+                  <option>CA</option>
+                  <option>EU</option>
+                </select>
+                <ChevronDownIcon
+                  className="pointer-events-none absolute right-3 top-0 h-full w-5 text-gray-400"
+                  aria-hidden="true"
+                />
+              </div>
+              <input
+                type="tel"
+                name="phone-number"
+                id="phone-number"
+                autoComplete="tel"
+                className="block w-full rounded-md border-0 px-3.5 py-2 pl-20 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+              />
+            </div>
+          </div>
+          <div className="sm:col-span-2">
+            <label htmlFor="message" className="block text-sm font-semibold leading-6 text-gray-900">
+              Message
+            </label>
+            <div className="mt-2.5">
+              <textarea
+                name="message"
+                id="message"
+                rows={4}
+                className="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                defaultValue={''}
+              />
+            </div>
+          </div>
+          <Switch.Group as="div" className="flex gap-x-4 sm:col-span-2">
+            <div className="flex h-6 items-center">
+              <Switch
+                checked={agreed}
+                onChange={setAgreed}
+                className={classNames(
+                  agreed ? 'bg-indigo-600' : 'bg-gray-200',
+                  'flex w-8 flex-none cursor-pointer rounded-full p-px ring-1 ring-inset ring-gray-900/5 transition-colors duration-200 ease-in-out focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600'
+                )}
+              >
+                <span className="sr-only">Agree to policies</span>
+                <span
+                  aria-hidden="true"
+                  className={classNames(
+                    agreed ? 'translate-x-3.5' : 'translate-x-0',
+                    'h-4 w-4 transform rounded-full bg-white shadow-sm ring-1 ring-gray-900/5 transition duration-200 ease-in-out'
+                  )}
+                />
+              </Switch>
+            </div>
+            <Switch.Label className="text-sm leading-6 text-gray-600">
+              By selecting this, you agree to our{' '}
+              <a href="#" className="font-semibold text-indigo-600">
+                privacy&nbsp;policy
+              </a>
+              .
+            </Switch.Label>
+          </Switch.Group>
+        </div>
+        <div className="mt-10">
+          <button
+            type="submit"
+            className="block w-full rounded-md bg-indigo-600 px-3.5 py-2.5 text-center text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+          >
+            Let's talk
+          </button>
+        </div>
+      </form>
+    </div>
+  )
+}

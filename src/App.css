@@ -1,5 +1,5 @@
 body{
-    background-color: rgb(168 162 158);
+    background-color: #E6E6E6;
 }
 
 /* export */
@@ -31,7 +31,7 @@ body{
     left: 0;
     height: 100%;
     width: 100%;
-    background: rgb(100 116 139);
+    background: #878D95;
     border-left: 2px solid #FC6D6D;
     animation: typing 4s steps(20) infinite;
 }
