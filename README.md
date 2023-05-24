@@ -1,9 +1,7 @@
-# pwa-web!
+# 履歷網站
 
-## 部署
-[https://react-efxzyguim-conmou.vercel.app/](https://react-efxzyguim-conmou.vercel.app/)
+Step 1
+### npm install
 
-### 曾經經歷的痛苦
-WTFxxx(謝謝...沒過)
-![](https://i.imgur.com/o4l9SXB.jpg)
-
+Step 2
+### npm start
