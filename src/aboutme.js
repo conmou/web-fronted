@@ -3,11 +3,12 @@ import './tailwind.css'
 import img from "./image/pic.webp"
 import './App.css'
 import Comment from './Comment';
+import image2 from './image/bigimg1.jpg'
 
 function About() {
   return [
     <div className="bg-bg">
-      <div className="mx-auto grid max-w-2xl grid-cols-1 items-center gap-y-16 gap-x-8 py-24 px-4 sm:px-6 sm:py-32 lg:max-w-7xl lg:grid-cols-2 lg:px-8">
+      <div className="mx-auto grid max-w-2xl grid-cols-1 items-center gap-y-16 gap-x-8 py-24 px-4 sm:px-6 sm:py-24 lg:max-w-7xl lg:grid-cols-2 lg:px-8">
         <div id="wrapper" className='px-5 py-10 bg-all-bg drop-shadow-2xl'>
           <h2 className="text-3xl font-medium tracking-tight text-gary-dark sm:text-4xl bg-bg p-2 drop-shadow-md text-center">關於我</h2>
           <ul id="dynamic">
@@ -64,10 +65,11 @@ function About() {
         </div>
         <div className="grid grid-cols sm:gap-6 lg:gap-8">
           <img
-            src={img}
-            className="rounded-xl mx-auto item-conter"
+            src={image2}
+            className="rounded-xl mx-auto item-center shadow-lg"
             alt='me'
             width="80%"
+            height={20}
           />
         </div>
       </div>

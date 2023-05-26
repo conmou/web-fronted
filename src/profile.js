@@ -42,14 +42,17 @@ export default function Example() {
 
   const handleUpdateChange = (e) =>{
     const { name, value } = e.target
-    setupdateUser((prev)=>({
-      ...prev, 
-      [name]: value,
-      // [username]: e.target.value,
-      // [sex]: name === "sex" ? parseInt(value) : value,
-      // [phone]: e.target.value,
-      // [des]: e.target.value,
-    }))
+    // setupdateUser((prev)=>({
+    //   ...prev, 
+    //   [name]: value,
+    //   // [username]: e.target.value,
+    //   // [sex]: name === "sex" ? parseInt(value) : value,
+    //   // [phone]: e.target.value,
+    //   // [des]: e.target.value,
+    // }))
+    setupdateUser((prev) => {
+      return { ...prev, [name]: value };
+    });
   }
 
   const handleUpdateClick = async (id) =>{
